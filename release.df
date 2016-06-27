@@ -1,0 +1,3 @@
+FROM scratch
+COPY ./bin/reflect-linux64 /reflect
+ENTRYPOINT ["/reflect"]

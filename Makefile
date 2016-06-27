@@ -3,8 +3,8 @@
 PWD := $(shell pwd)
 
 clean:
-	rm bin/reflect-exported
-	docker rmi buildertools/reflect:dev
+	rm bin/*
+	docker rmi allingeek/reflect:dev
 
 # Using `docker cp` to copy a file out of an image requires three steps:
 #  1. Create a container from the target image
@@ -16,10 +16,10 @@ clean:
 # This has the nice property of being able to run in a single step and potentially 
 # performing more complex copy operations.
 build:
-	docker build -t buildertools/reflect:dev -f build.df .
-	docker run --rm -v $(PWD)/bin:/xfer buildertools/reflect:dev /bin/sh -c 'cp /go/bin/reflect* /xfer/'
+	docker build -t allingeek/reflect:dev -f build.df .
+	docker run --rm -v $(PWD)/bin:/xfer allingeek/reflect:dev /bin/sh -c 'cp /go/bin/reflect* /xfer/'
 
 release: build
-	docker build -t buildertools/reflect:latest -f release.df .
-	docker tag buildertools/reflect:latest buildertools/reflect:poc
+	docker build -t allingeek/reflect:latest -f release.df .
+	docker tag allingeek/reflect:latest allingeek/reflect:1
 
