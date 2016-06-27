@@ -1,0 +1,10 @@
+FROM golang:alpine
+RUN apk --update add git
+
+COPY *.go /go/src/github.com/buildertools/reflect/
+
+WORKDIR /go/
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o bin/reflect-linux64 -v github.com/buildertools/reflect
+RUN CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -o bin/reflect-darwin64 -v github.com/buildertools/reflect
+
+CMD echo Drip build container
